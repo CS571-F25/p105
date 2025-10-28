@@ -1,20 +1,20 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { HashRouter, Route, Routes } from 'react-router';
 
 export default function navHost(props) {
 
     return (
-    <BrowserRouter>
+    <HashRouter>
         <Routes>
             <Route path="/" element={props.homePage} />
-            <Route index element={}/>
-            <Route path="/login" element={}></Route>
-          <Route path="/register" element={}></Route>
-          <Route path="/homePage" element={}></Route>
-          <Route path="/checkOut" element={}></Route>
-          <Route path="/store" element={}></Route>
-          <Route path="/accountPage" element={}></Route>
-          <Route path="*" element={} />
+            <Route index />
+            <Route path="/login" ></Route>
+          <Route path="/register"></Route>
+          <Route path="/homePage" ></Route>
+          <Route path="/checkOut" ></Route>
+          <Route path="/store" ></Route>
+          <Route path="/accountPage" ></Route>
+          <Route path="*" />
         </Routes>
-    </BrowserRouter>
+    </HashRouter>
     );
 }
