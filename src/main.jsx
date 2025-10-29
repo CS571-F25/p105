@@ -1,10 +1,9 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
-import calorieCartApp from './components/websiteHost/navBarWebsite'
+
+import CalorieCartApp from './components/structural/CalorieCartApp.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <calorieCartApp />
-
+  <CalorieCartApp />
 )
