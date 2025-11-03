@@ -51,11 +51,11 @@ export default function LoginPage() {
 
                 <Form onSubmit={handleSubmit}>
                   <FloatingLabel label="Username" className="mb-3">
-                    <Form.Control name="username" type="text" placeholder="Username" autoComplete="username" />
+                    <Form.Control name="username" type="text" placeholder="Username" autoComplete="none" />
                   </FloatingLabel>
 
                   <FloatingLabel label="Password" className="mb-3">
-                    <Form.Control name="password" type="password" placeholder="Password" autoComplete="current-password" />
+                    <Form.Control name="password" type="password" placeholder="Password" autoComplete="new-password" />
                   </FloatingLabel>
 
                   <div className="d-grid gap-2">

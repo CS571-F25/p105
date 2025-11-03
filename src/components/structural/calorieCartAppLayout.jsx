@@ -1,13 +1,31 @@
 import { Container, Navbar, Nav, NavDropdown, Button, Offcanvas } from "react-bootstrap";
-import { Link, useNavigate, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Link, Outlet,useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import crest from "../../assets/uw-crest.svg";
 import cart from "../../assets/cart.svg";
 import accountIcon from "../../assets/account.svg";
 
 export default function CalorieCartAppLayout() {
+  const [items, setItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    fetch("https://raw.githubusercontent.com/CS571-F25/p105/0ed3b7ee2bf81c51813d04ef2b27f16d08f79443/src/API/items.json"
+      
+    )
+      .then((r) => r.json())
+      .then((d) => setItems(d.items || []));
+  }, []); 
+
+  const types = useMemo(() => {
+    const set = new Set(items.map((it) => it.type));
+    return Array.from(set);
+  }, [items]);
+
+  const slug = (s="") => s.toLowerCase().replaceAll("/", "-");
+
+
+
 
   return (
     <div>
@@ -29,21 +47,19 @@ export default function CalorieCartAppLayout() {
 
           <Nav>
             <NavDropdown title="Store" menuVariant="dark" /* use the prop, not style */ style={{ marginRight: 12 }}>
-              <NavDropdown.Item>Meats/Poultry</NavDropdown.Item>
-              <NavDropdown.Item>Vegetables</NavDropdown.Item>
-              <NavDropdown.Item>Dairy</NavDropdown.Item>
-              <NavDropdown.Item>Snacks</NavDropdown.Item>
-              <NavDropdown.Item>Beverages</NavDropdown.Item>
+              {types.map((t) => (
+                <NavDropdown.Item key={t} as={Link} to={`/store/${slug(t)}`}>
+                  {t}
+                </NavDropdown.Item>
+              ))}
             </NavDropdown>
             <Nav.Link as={Link} to="/deals">Deals</Nav.Link>
           </Nav>
         </div>
 
-        {/* RIGHT: Login + Cart + Account */}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Nav.Link as={Link} to="/login" style={{ color: "#fff" }}>Login</Nav.Link>
 
-          {/* icon-only buttons without thick outlines */}
           <Button
             variant="light"
             onClick={() => setShowCart(true)}
