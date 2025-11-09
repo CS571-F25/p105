@@ -1,22 +1,22 @@
 import React from "react";
 import { Card, Button, Table } from "react-bootstrap";
 
-export default function CartComponent({ item, onCheckout }) {
-  if (!item) return null;
+export default function CartComponent() {
 
-  const { name = "Unnamed", imgSrc, nutrition = {} } = item;
-  const cals = nutrition.calories ?? "-";
-  const prot = nutrition.protein ?? "-";
-  const fat  = nutrition.fat ?? "-";
-  const carb = nutrition.carbs ?? "-";
+  // const { name = "Unnamed", imgSrc, nutrition = {} } = item;
+  // const cals = nutrition.calories ?? "-";
+  // const prot = nutrition.protein ?? "-";
+  // const fat  = nutrition.fat ?? "-";
+  // const carb = nutrition.carbs ?? "-";
 
   return (
     <Card style={{ marginBottom: 16 }}>
-      {imgSrc ? <Card.Img variant="top" src={imgSrc} alt={name} /> : null}
+      <Card.Img variant="top" src="https://pngimg.com/d/broccoli_PNG2820.png"
+     /> 
       <Card.Body>
-        <Card.Title>{name}</Card.Title>
-
-        <Table bordered size="sm" className="mb-3">
+        <Card.Title>Chicken Breast</Card.Title>
+        <h4>Price $5</h4>
+        <Table style={{borderRadius:15}}>
           <thead>
             <tr>
               <th>Calories</th>
@@ -27,15 +27,15 @@ export default function CartComponent({ item, onCheckout }) {
           </thead>
           <tbody>
             <tr>
-              <td>{cals}</td>
-              <td>{prot}</td>
-              <td>{fat}</td>
-              <td>{carb}</td>
+              <td>200 Call</td>
+              <td>20g</td>
+              <td>5g</td>
+              <td>5g</td>
             </tr>
           </tbody>
         </Table>
 
-        <Button onClick={() => onCheckout?.(item)}>Checkout</Button>
+        <Button>Add</Button>
       </Card.Body>
     </Card>
   );

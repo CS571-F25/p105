@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Container, Col, Form, Row, Card } from "react-bootstrap";
+import StoreCard from "../websitePages/componentsPage/cartComponent.jsx";
 
 export default function StorePage(category) {
   const [items, setItems] = useState([]);
@@ -64,24 +65,12 @@ export default function StorePage(category) {
               }}
             >
               <Row xs={1} sm={2} md={3} className="g-3">
-                {items.map((it) => (
-                  <Col key={it.name}>
-                    <Card>
-                      <Card.Img variant="top" src={it.image} alt={it.name} />
-                      <Card.Body>
-                        <Card.Title style={{ fontSize: 16, marginBottom: 6 }}>
-                          {it.name}
-                        </Card.Title>
-                        <Card.Text style={{ marginBottom: 6 }}>
-                          ${it.price.toFixed(2)}
-                        </Card.Text>
-                        <Card.Text className="text-muted" style={{ fontSize: 13 }}>
-                          {it.nutrition.calories_kcal} kcal • {it.nutrition.protein_g}g protein
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
+                <StoreCard />
+                <StoreCard />
+                <StoreCard />
+                <StoreCard />
+                <StoreCard />
+                
               </Row>
             </div>
           </Col>

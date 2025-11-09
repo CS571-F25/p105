@@ -24,7 +24,6 @@ export default function LoginPage() {
 
   return (
     <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
-      {/* SVG anime background */}
       <img
         src={SvgTexture}
         alt="background texture"

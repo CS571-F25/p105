@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import crest from "../../assets/uw-crest.svg";
 import cart from "../../assets/cart.svg";
 import accountIcon from "../../assets/account.svg";
+import CheckoutComponent from "../websitePages/componentsPage/checkoutPopOut.jsx";
 
 export default function CalorieCartAppLayout() {
   const [items, setItems] = useState([]);
@@ -15,6 +16,7 @@ export default function CalorieCartAppLayout() {
     )
       .then((r) => r.json())
       .then((d) => setItems(d.items || []));
+      navigate("/");
   }, []); 
 
   const types = useMemo(() => {
@@ -53,7 +55,6 @@ export default function CalorieCartAppLayout() {
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
-            <Nav.Link as={Link} to="/deals">Deals</Nav.Link>
           </Nav>
         </div>
 
@@ -85,15 +86,10 @@ export default function CalorieCartAppLayout() {
         </div>
       </Container>
     </Navbar>
-    <Offcanvas placement="end" show={showCart} onHide={() => setShowCart(false)}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Your Cart</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-              <p>no items yet</p>
-        </Offcanvas.Body>
-      </Offcanvas>
-      <Outlet />  
+            <CheckoutComponent
+        show={showCart}
+        handleClose={() => setShowCart(false)}
+            />
     </div>
   );
 }
