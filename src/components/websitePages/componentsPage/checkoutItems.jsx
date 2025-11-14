@@ -1,6 +1,6 @@
 import { Row, Col, Table } from "react-bootstrap";
 
-export default function CheckoutItems() {
+export default function CheckoutItems({checkingOut}) {
 
 
   return (
@@ -11,7 +11,8 @@ export default function CheckoutItems() {
         </Col>
         <Col md={5}>
             <h5>This is a very cool food item where I describe im made it.</h5>
-            <Table bordered size="sm" className="mb-3">
+            <h6>Price: #</h6>
+           checkingOut &&({ <Table bordered size="sm" className="mb-3">
           <thead>
             <tr>
               <th>Calories</th>
@@ -28,8 +29,7 @@ export default function CheckoutItems() {
               <td>Carb</td>
             </tr>
           </tbody>
-          <h6>price 2</h6>
-        </Table>
+        </Table>})
 
         </Col>
      </Row>

@@ -1,6 +1,7 @@
 {
   "items": [
     {
+      "id": 1,
       "type": "vegetables",
       "description": "Broccoli (1 cup)",
       "image": "https://pngimg.com/d/broccoli_PNG2820.png",
@@ -13,6 +14,7 @@
       "discount": true
     },
     {
+      "id": 2,
       "type": "vegetables",
       "description": "Carrots (1 cup)",
       "image": "https://www.nicepng.com/png/full/14-143608_carrot-png-download-image-food-we-get-from.png",
@@ -25,6 +27,7 @@
       "discount": false
     },
     {
+      "id": 3,
       "type": "vegetables",
       "description": "Spinach (2 cups)",
       "image": "https://pngimg.com/d/spinach_PNG33.png",
@@ -37,6 +40,7 @@
       "discount": false
     },
     {
+      "id": 4,
       "type": "vegetables",
       "description": "Bell Pepper (1 medium)",
       "image": "https://www.nicepng.com/png/detail/4-47021_3-bell-peppers-bell-pepper.png",
@@ -49,6 +53,7 @@
       "discount": false
     },
     {
+      "id": 5,
       "type": "vegetables",
       "description": "Cherry Tomatoes (1 cup)",
       "image": "https://static.vecteezy.com/system/resources/previews/047/825/185/non_2x/cherry-tomatoes-on-vine-isolated-on-a-transparent-background-free-png.png",
@@ -61,6 +66,7 @@
       "discount": false
     },
     {
+      "id": 6,
       "type": "protein",
       "description": "Chicken Breast (4 oz)",
       "image": "https://wallpapers.com/images/hd/grilled-chicken-breast-png-ep9dx1xf6lg6glfr.jpg",
@@ -73,6 +79,7 @@
       "discount": true
     },
     {
+      "id": 7,
       "type": "protein",
       "description": "Ground Beef 90% Lean (4 oz)",
       "image": "https://i5.walmartimages.com/asr/ad2aca1d-4af9-4a87-a6d0-5b704b0eafe8.d4f32b2a68399e5035fa894c29a0a0ee.png",
@@ -85,6 +92,7 @@
       "discount": false
     },
     {
+      "id": 8,
       "type": "protein",
       "description": "Turkey Slices (3 oz)",
       "image": "https://res.cloudinary.com/kraft-heinz-whats-cooking-ca/image/upload/f_auto/q_auto/r_8/c_limit,w_3840/f_auto/q_auto/v1/dxp-images/oscarmayer/products/00044700064412-lean-oven-roasted-white-turkey-sliced-lunch-meat/marketing-view-color-front_86c5be7adb01d0779a6d2d07804a3c235dc98bde_9b1a25ac265ec9a906950853537479fa?_a=BAVAfVDW0",
@@ -97,6 +105,7 @@
       "discount": false
     },
     {
+      "id": 9,
       "type": "protein",
       "description": "Salmon Fillet (4 oz)",
       "image": "https://acmesmokedfish.com/cdn/shop/files/4207B-BHB-4oz-SKINPACK-BakedSalmonPortion-01-Front_607a8c51-7f12-4659-991d-e827cc1b496d_3000x.png?v=1689864632",
@@ -109,6 +118,7 @@
       "discount": false
     },
     {
+      "id": 10,
       "type": "protein",
       "description": "Pork Loin (4 oz)",
       "image": "https://assets-us-01.kc-usercontent.com/3b1720e5-a9aa-0088-f165-1043ab81f774/380e6671-979f-48da-9e53-9419186c3052/Farmer%20John%20Roasted%20Garlic%20_%20Herb%20Pork%20Loin%20Filet%20Front%2090050500813634.png?w=1160&auto=format",
@@ -121,6 +131,7 @@
       "discount": false
     },
     {
+      "id": 11,
       "type": "snacks",
       "description": "Greek Yogurt Bar",
       "image": "https://cliosnacks.com/cdn/shop/files/4ct_Vanilla.png?crop=center&height=800&v=1737045240&width=800",
@@ -133,6 +144,7 @@
       "discount": true
     },
     {
+      "id": 12,
       "type": "snacks",
       "description": "Mixed Nuts (1 oz)",
       "image": "https://bengalseafoods.com/cdn/shop/products/Kirkland_Signature_Extra_Fancy_Mixed_Nuts_Salted_40_oz_front.png?v=1738783875",
@@ -145,6 +157,7 @@
       "discount": false
     },
     {
+      "id": 13,
       "type": "snacks",
       "description": "Granola Bar",
       "image": "https://www.pepsicoschoolsource.com/prod/s3fs-public/2021-06/QUAKER%C2%AE%20CHEWY%20GRANOLA%20BAR%2025%25%20LESS%20SUGAR%20CHOCOLATE%20CHIP.png",
@@ -157,6 +170,7 @@
       "discount": false
     },
     {
+      "id": 14,
       "type": "snacks",
       "description": "Rice Crackers",
       "image": "https://www.lundberg.com/cdn/shop/files/OGCake_LightlySalted_FRONT_1000_1_1000x.png?v=1712342856",
@@ -169,6 +183,7 @@
       "discount": false
     },
     {
+      "id": 15,
       "type": "snacks",
       "description": "Beef Jerky (1 oz)",
       "image": "https://steelsupplements.com/cdn/shop/files/1-oz-steel-smokehouse-brisket-beef-jerky-smoky-bbq-1183997133_1200x.png?v=1754931160",
@@ -181,6 +196,7 @@
       "discount": false
     },
     {
+      "id": 16,
       "type": "beverages",
       "description": "Skim Milk (8 oz)",
       "image": "https://www.organicvalley.coop/_next/image/?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F5dqbssss%2Fproduction-v3%2Fd344cccd070fb4d9e847182c18ccbaf73f794bb3-906x2000.png&w=3840&q=75",
@@ -193,6 +209,7 @@
       "discount": true
     },
     {
+      "id": 17,
       "type": "beverages",
       "description": "Orange Juice (8 oz)",
       "image": "https://www.countrypure.com/wp-content/uploads/Orange-4-1-e1711737555441.png",
@@ -205,6 +222,7 @@
       "discount": false
     },
     {
+      "id": 18,
       "type": "beverages",
       "description": "Protein Shake (11 oz)",
       "image": "https://www.transparentlabs.com/cdn/shop/files/Grass-Fed_Protein_Shake_-_Vanilla.png?v=1754414863",
@@ -217,6 +235,7 @@
       "discount": false
     },
     {
+      "id": 19,
       "type": "beverages",
       "description": "Sparkling Water (12 oz)",
       "image": "https://www.schweppesus.com/images/catalog/products/updated-images/schweppes-lemon-lime-sparkling-water.png",
@@ -229,6 +248,7 @@
       "discount": false
     },
     {
+      "id": 20,
       "type": "beverages",
       "description": "Cold Brew Coffee (12 oz)",
       "image": "https://www.peets.com/cdn/shop/products/cold-brew-iced-coffee.png?v=1597269387",
@@ -241,6 +261,7 @@
       "discount": false
     },
     {
+      "id": 21,
       "type": "dairy",
       "description": "Greek Yogurt (6 oz)",
       "image": "https://i5.walmartimages.com/asr/9f9d9753-480b-4eb9-8484-611905246d5a.18fcbc8003db84914d838c0bed2bd6f6.png",
@@ -253,6 +274,7 @@
       "discount": true
     },
     {
+      "id": 22,
       "type": "dairy",
       "description": "Cheddar Cheese (1 oz)",
       "image": "https://png.pngtree.com/png-clipart/20231003/original/pngtree-cheddar-cheese-wax-png-image_13244393.png",
@@ -265,6 +287,7 @@
       "discount": false
     },
     {
+      "id": 23,
       "type": "dairy",
       "description": "Cottage Cheese (1/2 cup)",
       "image": "https://www.mehadrin.com/wp-content/uploads/2021/09/Cottage-Cheese-16oz.png",
@@ -277,6 +300,7 @@
       "discount": false
     },
     {
+      "id": 24,
       "type": "dairy",
       "description": "Butter (1 tbsp)",
       "image": "https://www.nicepng.com/png/full/102-1023389_butter-png-image-background-dromona-spread-easy-butter.png",
@@ -289,6 +313,7 @@
       "discount": false
     },
     {
+      "id": 25,
       "type": "dairy",
       "description": "Whole Milk (8 oz)",
       "image": "https://horizon.com/wp-content/uploads/horizon-shelf-stable-organic-whole-milk.png",

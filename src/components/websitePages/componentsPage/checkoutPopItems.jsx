@@ -1,0 +1,122 @@
+import { Card, Row, Col, Form, Button } from "react-bootstrap";
+
+export default function checkoutPopItem({
+  qty,
+  add,
+  subtract,
+  handleQtyChange,
+}) {
+  const tesImg =
+    "https://horizon.com/wp-content/uploads/horizon-shelf-stable-organic-whole-milk.png";
+  const testPrice = 3;
+  const testDescription = "Greater Food";
+  const qtyInputStyle = {
+    width: 40,
+    padding: 0,
+    textAlign: "center",
+    height: "1.8rem",
+    fontWeight: 600,
+    fontSize: 14,
+  };
+
+  const cardStyle = {
+    border: "none",
+    marginBottom: 16,
+  };
+  const imgStyle = {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    objectFit: "cover",
+  };
+
+  const removeButtonStyle = {
+    padding: 0,
+    border: "none",
+    background: "transparent",
+    fontSize: 20,
+    lineHeight: 1,
+  };
+
+  const qtyWrapperStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    borderRadius: 999,
+    border: "1px solid #ddd",
+    padding: "4px 10px",
+  };
+
+  const qtyButtonStyle = {
+    padding: "2px 8px",
+    borderRadius: 999,
+    border: "none",
+    backgroundColor: "transparent",
+    fontSize: 18,
+  };
+
+  const qtyValueStyle = {
+    minWidth: 20,
+    textAlign: "center",
+    fontWeight: 600,
+  };
+
+  return (
+    <Card style={cardStyle}>
+      <Row style={{ alignItems: "center" }}>
+        <Col xs="auto">
+          <img src={tesImg} alt="item" style={imgStyle} />
+        </Col>
+
+        <Col>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+            }}
+          >
+            <div>
+              <div style={{ fontWeight: 600 }}>Creatine Monohydrate</div>
+              <div style={{ fontSize: 12, color: "#666" }}>
+                200 Servings, Unflavored
+              </div>
+            </div>
+            <button style={removeButtonStyle} aria-label="Remove item">
+              ×
+            </button>
+          </div>
+
+          {/* Bottom row: price + qty stepper */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 8,
+            }}
+          >
+            <div style={{ fontWeight: 600 }}>$2.99</div>
+
+            <div style={qtyWrapperStyle}>
+              <button style={qtyButtonStyle} onClick={subtract}>
+                −
+              </button>
+              <Form.Control
+                type="text"
+                inputMode="numeric"
+                value={qty}
+                onChange={handleQtyChange}
+                style={qtyInputStyle}
+                placeholder="0"
+              />
+              <button style={qtyButtonStyle} onClick={add}>
+                +
+              </button>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </Card>
+  );
+}

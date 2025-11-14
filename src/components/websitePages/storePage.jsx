@@ -1,28 +1,39 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Container, Col, Form, Row, Card } from "react-bootstrap";
-import StoreCard from "../websitePages/componentsPage/cartComponent.jsx";
+import { Container, Col, Form, Row } from "react-bootstrap";
+import {  useParams } from "react-router-dom";
+import StoreCard from "../websitePages/componentsPage/cartComponent"
 
-export default function StorePage(category) {
-  const [items, setItems] = useState([]);
-  
+export default function StorePage({ items, }) {
+  const slug = (s = "") =>
+    s.toLowerCase().replaceAll("/", "-").replaceAll(" ", "-");
 
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/CS571-F25/p105/0ed3b7ee2bf81c51813d04ef2b27f16d08f79443/src/API/items.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data.items);
-      })
-  }, []);
+  const { type: typeSlug } = useParams();
 
-  const green = "#73b23a"; // just one color constant
+ const effectiveType = useMemo(() => {
+    if (!typeSlug || !items.length) return null;
+    const match = items.find((it) => slug(it.type) === typeSlug);
+    return match?.type ?? null;
+  }, [items, typeSlug]);
+
+  const title = useMemo(() => {
+    if (!effectiveType) return "Store";
+    const raw = effectiveType;
+    return raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+  }, [effectiveType]);
+
+  const filteredItems = useMemo(() => {
+    if (!effectiveType) return [];
+    const want = slug(effectiveType);
+    return items.filter((it) => slug(it.type) === want);
+  }, [items, effectiveType]);
+
+  const green = "#73b23a";
 
   return (
     <div style={{ margin: "0 auto", padding: 16 }}>
       <Container fluid>
+        <h1 style={{ marginTop: 20, marginBottom: 20 }}>{title}</h1>
         <Row style={{ marginTop: 20 }}>
-          {/* LEFT: Filters with green border */}
           <Col md={3}
                style={{
                  border: `8px solid ${green}`,
@@ -39,9 +50,7 @@ export default function StorePage(category) {
             </Form>
           </Col>
 
-          {/* RIGHT: Search box (border) + Cards box (border) */}
           <Col md={9}>
-            {/* Search with border */}
             <div
               style={{
                 border: `8px solid ${green}`,
@@ -55,7 +64,6 @@ export default function StorePage(category) {
               </Form>
             </div>
 
-            {/* Cards area with border */}
             <div
               style={{
                 border: `8px solid ${green}`,
@@ -64,13 +72,10 @@ export default function StorePage(category) {
                 minHeight: 420
               }}
             >
-              <Row xs={1} sm={2} md={3} className="g-3">
-                <StoreCard />
-                <StoreCard />
-                <StoreCard />
-                <StoreCard />
-                <StoreCard />
-                
+              <Row xs={1} sm={2} md={3}>
+              {filteredItems.map((item, idx) => (
+                  <StoreCard key={item.id ?? item.description ?? idx} item={item} cardStyle={{width:"32%"}}/>
+                ))}
               </Row>
             </div>
           </Col>
