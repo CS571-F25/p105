@@ -1,22 +1,66 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import crest from "../../assets/uw-crest.svg";
 import cart from "../../assets/cart.svg";
 import accountIcon from "../../assets/account.svg";
 import CheckoutComponent from "../websitePages/componentsPage/checkoutPopOut.jsx";
+import { AuthContext } from "./CalorieCartApp.jsx";
 export default function CalorieCartAppLayout({ children }) {
   const [items, setItems] = useState([]);
-  const [type, setType] = useState(null);  
+  const [type, setType] = useState(null);
   const [showCart, setShowCart] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  const [qty, setQty] = useState({});
+  const removeItem = (id) => {
+    setQty((prev)=> {
+      const copy = {...prev};
+      delete copy[id];
+
+      return copy
+    }
+    
+    );
+  };
+  const add = (id) => {
+        setQty((prev) => ({
+          ...prev,
+          [id]: (prev[id] || 0) + 1,
+        }));
+      };
+      const subtract = (id) => {
+           setQty((prev) => {
+            const current = prev[id] || 0;
+            const next = Math.max(0, current - 1);
+            return { ...prev, [id]: next };
+          });
+        };
+
+
+
+      const handleQtyChange = (id, e) => {
+            const raw = e.target.value.replace(/[^0-9]/g, "");
+            const next = raw === "" ? 0 : Number(raw);
+            setQty((prev) => ({
+              ...prev,
+              [id]: Number.isNaN(next) ? 0 : next,
+            }));
+          };
+
+
+  const { user, setUser } = useContext(AuthContext);
+
   // basic slug for URL
-  const slug = (s = "") => s.toLowerCase().replaceAll("/", "-").replaceAll(" ", "-");
+  const slug = (s = "") =>
+    s.toLowerCase().replaceAll("/", "-").replaceAll(" ", "-");
 
   // Fetch just to populate dropdown types
   useEffect(() => {
-    fetch("https://raw.githubusercontent.com/CS571-F25/p105/main/src/API/items.json")
+    fetch(
+      "https://raw.githubusercontent.com/CS571-F25/p105/main/src/API/items.json"
+    )
       .then((r) => r.json())
       .then((d) => setItems(Array.isArray(d?.items) ? d.items : []))
       .catch(() => setItems([]));
@@ -29,8 +73,14 @@ export default function CalorieCartAppLayout({ children }) {
   }, [items]);
 
   const goToStore = (t) => {
-    setType(t);                    
-    navigate(`/store/${slug(t)}`);  
+    setType(t);
+    navigate(`/store/${slug(t)}`);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    alert("You have been logged out.");
+    navigate("/login");
   };
 
   return (
@@ -77,10 +127,15 @@ export default function CalorieCartAppLayout({ children }) {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <Nav.Link as={Link} to="/login" style={{ color: "#fff" }}>
-              Login
-            </Nav.Link>
-
+            {user ? (
+              <Nav.Link onClick={handleLogout} style={{ color: "#fff" }}>
+                Logout
+              </Nav.Link>
+            ) : (
+              <Nav.Link as={Link} to="/login" style={{ color: "#fff" }}>
+                Login
+              </Nav.Link>
+            )}
             <Button
               variant="light"
               onClick={() => setShowCart(true)}
@@ -92,7 +147,10 @@ export default function CalorieCartAppLayout({ children }) {
 
             <Button
               variant="light"
-              onClick={() => navigate("/account")}
+              onClick={() => {
+                if (!user) navigate("/login");
+                else navigate("/account");
+              }}
               style={{
                 width: 36,
                 height: 36,
@@ -117,10 +175,20 @@ export default function CalorieCartAppLayout({ children }) {
           types,
           type,
           setType,
+          qty,
+          add,
+          subtract,
+          handleQtyChange,
         })}
       <CheckoutComponent
         show={showCart}
+        items={items}
         handleClose={() => setShowCart(false)}
+        qty={qty}
+        add={add}
+        subtract={subtract}
+        handleQtyChange={handleQtyChange}
+        removeItem={removeItem}
       />
     </div>
   );

@@ -1,15 +1,14 @@
 import { Card, Row, Col, Form, Button } from "react-bootstrap";
 
 export default function checkoutPopItem({
+    item,
   qty,
   add,
   subtract,
   handleQtyChange,
+  removeItem
 }) {
-  const tesImg =
-    "https://horizon.com/wp-content/uploads/horizon-shelf-stable-organic-whole-milk.png";
-  const testPrice = 3;
-  const testDescription = "Greater Food";
+ 
   const qtyInputStyle = {
     width: 40,
     padding: 0,
@@ -55,17 +54,14 @@ export default function checkoutPopItem({
     fontSize: 18,
   };
 
-  const qtyValueStyle = {
-    minWidth: 20,
-    textAlign: "center",
-    fontWeight: 600,
-  };
+  
 
   return (
     <Card style={cardStyle}>
       <Row style={{ alignItems: "center" }}>
         <Col xs="auto">
-          <img src={tesImg} alt="item" style={imgStyle} />
+          <img src={item.image}    alt={item.description}
+             style={imgStyle} />
         </Col>
 
         <Col>
@@ -77,17 +73,14 @@ export default function checkoutPopItem({
             }}
           >
             <div>
-              <div style={{ fontWeight: 600 }}>Creatine Monohydrate</div>
-              <div style={{ fontSize: 12, color: "#666" }}>
-                200 Servings, Unflavored
-              </div>
+              <div style={{ fontWeight: 600 }}>{item.description}</div>
+             
             </div>
-            <button style={removeButtonStyle} aria-label="Remove item">
+            <button style={removeButtonStyle} aria-label="Remove item" onClick={removeItem}>
               ×
             </button>
           </div>
 
-          {/* Bottom row: price + qty stepper */}
           <div
             style={{
               display: "flex",
@@ -96,7 +89,7 @@ export default function checkoutPopItem({
               marginTop: 8,
             }}
           >
-            <div style={{ fontWeight: 600 }}>$2.99</div>
+            <div style={{ fontWeight: 600 }}>{item.price}</div>
 
             <div style={qtyWrapperStyle}>
               <button style={qtyButtonStyle} onClick={subtract}>

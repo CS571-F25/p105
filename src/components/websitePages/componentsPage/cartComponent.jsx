@@ -1,13 +1,42 @@
 // cartComponent.jsx
 import React from "react";
-import { Card, Button, Table , Form} from "react-bootstrap";
-import { alignPropType } from "react-bootstrap/esm/types";
+import { Card, Button, Table , Form, Row} from "react-bootstrap";
 
-export default function CartComponent({ item, cardStyle}) {
-  const cals = item?.nutrition?.calories_kcal ?? "-";
-  const prot = item?.nutrition?.protein_g ?? "-";
-  const fat  = item?.nutrition?.fat_g ?? "-";
-  const carb = item?.nutrition?.carbs ?? "-";
+export default function CartComponent({ item, cardStyle, qty, handleQtyChange, add, subtract}) {
+  const cals = item?.nutrition.calories_kcal ?? "-";
+  const prot = item?.nutrition.protein_g ?? "-";
+  const fat  = item?.nutrition.fat_g ?? "-";
+  const carb = item?.nutrition.carbs ?? "-";
+
+ 
+
+  const qtyInputStyle = {
+    width: 40,
+    padding: 0,
+    textAlign: "center",
+    height: "1.8rem",
+    fontWeight: 600,
+    fontSize: 14,
+
+  };
+
+  const qtyWrapperStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    borderRadius: 999,
+    border: "1px solid #ddd",
+    padding: "4px 10px",
+
+  };
+
+  const qtyButtonStyle = {
+    padding: "2px 8px",
+    borderRadius: 999,
+    border: "none",
+    backgroundColor: "transparent",
+    fontSize: 18,
+  };
 
   const priceStyle = {
     fontSize: 20,
@@ -23,8 +52,9 @@ export default function CartComponent({ item, cardStyle}) {
   };
 
   const buttonDesign = {
-    width:"50%",
-    display:"block"
+    borderRadius: 999,
+    fontWeight: 600,
+    marginRight:20
   }
 
   const tableStyle = {
@@ -76,13 +106,26 @@ export default function CartComponent({ item, cardStyle}) {
           </tbody>
         </Table>
         </div>
+        <div style={{display:"flex", justifyContent:"center",alignItems:"center",    marginTop: 20}}>
         <Button style={buttonDesign}>Add</Button>
-          <Form.Group>
-              <Form.Label>
-
-              </Form.Label>
-              <Form.Control type="number" placeholder="0" />
-          </Form.Group>
+          
+        <div style={qtyWrapperStyle}>
+              <button style={qtyButtonStyle} onClick={subtract}>
+                −
+              </button>
+              <Form.Control
+                type="text"
+                inputMode="numeric"
+                value={qty}
+                onChange={handleQtyChange}
+                style={qtyInputStyle}
+                placeholder="0"
+              />
+              <button style={qtyButtonStyle} onClick={add}>
+                +
+              </button>
+            </div>
+            </div>
       </Card.Body>
     </Card>
   );

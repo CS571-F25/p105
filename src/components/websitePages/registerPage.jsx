@@ -13,19 +13,108 @@ import {
   Col,
   CardFooter,
 } from "react-bootstrap";
-import { useCallback, useState } from "react";
+import { useNavigate } from "react-router";
+import { useCallback, useState, useContext } from "react";
 import SvgTexture from "../../assets/backLogin.svg";
+import { AuthContext } from "../structural/CalorieCartApp"; 
+
 export default function register() {
-  const [weight, SetWeight] = useState(0);
-  const [height, SetHeight] = useState(0);
-  const [goals, SetGoals] = useState([]);
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [userName, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSubmitting, setSubmission] = useState(false);
+  const [erroText, setErrorText] = useState("");
+  const { setUser } = useContext(AuthContext);
+  const [gainSelected, setGainSelected] = useState(true);
+  const [loseSelected, setLoseSelected] = useState(false);
+  const navigate = useNavigate();
+
+  //set account
+  const handleSubmit = () => {
+    setErrorText("");
+
+    // simple front-end checks
+    if (!userName.trim() || !password || !confirmPassword) {
+      setErrorText("Please fill out all required fields.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorText("Passwords do not match.");
+      return;
+    }
+    const ft = Math.floor(height / 12);
+    const inch = height % 12;
+
+    setSubmission(true);
+
+    // 1) GET existing accounts from the bucket
+    fetch("https://cs571api.cs.wisc.edu/rest/f25/bucket/account", {
+      credentials: "include",
+      headers: {
+        "X-CS571-ID": CS571.getBadgerId(),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // bucket returns: { collection: "account", results: { "<id>": { ... } } }
+        const existingAccounts = Object.values(data.results || {});
+        const alreadyExists = existingAccounts.some(
+          (acc) => acc.userName === userName
+        );
+
+        if (alreadyExists) {
+          setErrorText("An account with that username already exists.");
+          setSubmission(false);
+          return;
+        }
+
+        // 2) POST new account to the bucket
+        fetch("https://cs571api.cs.wisc.edu/rest/f25/bucket/account", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CS571-ID": CS571.getBadgerId(),
+          },
+          body: JSON.stringify({
+            userName,
+            password,
+            weight,
+            heightFt: ft,
+            heightIn: inch,
+            gainSelected,
+            loseSelected,
+          }),
+        })
+          .then((res) => res.json())
+          .then((created) => {
+            const newUser = {
+              userName,
+              password,
+              weight,
+              heightFt: ft,
+              heightIn: inch,
+              gainSelected,
+              loseSelected,
+            };
+
+            setUser(newUser)
+            console.log("Created account:", created);
+            alert("Account created! You can now log in.");
+            setSubmission(false);
+            navigate("/");
+                    });
+      });
+  };
+
+  //check register conditions
 
   const ft = Math.floor(height / 12);
   const inch = height % 12;
-  const gainSelected = goals.includes(1);
-  const loseSelected = goals.includes(2);
 
-  const HandleSubmit = useCallback(() => {}, []);
   const HandleWeight = useCallback(() => {}, []);
 
   const HandleHeight = useCallback(() => {}, []);
@@ -74,6 +163,18 @@ export default function register() {
               padding: "18px 16px",
             }}
           >
+            {erroText && (
+              <div
+                style={{
+                  color: "red",
+                  padding: "8px 16px 0 16px",
+                  textAlign: "center",
+                  fontSize: "0.95rem",
+                }}
+              >
+                {erroText}
+              </div>
+            )}
             <h2
               className="mb-3 text-center"
               style={{ color: "white", marginTop: 10, fontFamily: "Poppins" }}
@@ -98,6 +199,8 @@ export default function register() {
                   type="text"
                   placeholder="Username"
                   autoComplete="none"
+                  value={userName}
+                  onChange={(user) => setUsername(user.target.value)}
                 />
               </FloatingLabel>
 
@@ -107,6 +210,8 @@ export default function register() {
                   type="password"
                   placeholder="Password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(userPass) => setPassword(userPass.target.value)}
                 />
               </FloatingLabel>
 
@@ -116,6 +221,10 @@ export default function register() {
                   type="password"
                   placeholder="Confirm Password"
                   autoComplete="new-password"
+                  value={confirmPassword}
+                  onChange={(confimPass) =>
+                    setConfirmPassword(confimPass.target.value)
+                  }
                 />
               </FloatingLabel>
 
@@ -133,8 +242,15 @@ export default function register() {
                   }}
                 >
                   <Col>
-                    <Form.Label>Weight</Form.Label>
-                    <Form.Range />
+                    <Form.Label>
+                      Weight {weight > 0 && `: ${weight} lbs`}
+                    </Form.Label>
+                    <Form.Range
+                      min={80}
+                      max={400}
+                      value={weight}
+                      onChange={(e) => setWeight(Number(e.target.value))}
+                    />
                   </Col>
                 </div>
               </Col>
@@ -153,31 +269,60 @@ export default function register() {
                   }}
                 >
                   <Col>
-                    <Form.Label>Height</Form.Label>
-                    <Form.Range />
+                    <Form.Label>
+                      Height{" "}
+                      {height > 0 && `: ${ft} ft ${inch} in (${height}")`}
+                    </Form.Label>
+                    <Form.Range
+                      min={48}
+                      max={84}
+                      value={height}
+                      onChange={(e) => setHeight(Number(e.target.value))}
+                    />
                   </Col>
                 </div>
               </Col>
 
-              <ToggleButtonGroup
-                type="checkbox"
-                name="options"
-                defaultValue={1}
-              >
-                <ToggleButton id="tbg-radio-1" value={1}>
+              <div style={{ marginTop: 8, marginBottom: 8 }}>
+                <ToggleButton
+                  id="goal-gain"
+                  type="checkbox"
+                  variant={gainSelected ? "primary" : "outline-primary"}
+                  checked={gainSelected}
+                  value="gain"
+                  onChange={(goal) => {
+                    const next = goal.currentTarget.checked;
+                    setGainSelected(next);
+                    if (next) setLoseSelected(false); // keep them mutually exclusive
+                  }}
+                  style={{ marginRight: 8 }}
+                >
                   Gain Weight
                 </ToggleButton>
-                <ToggleButton id="tbg-radio-1" value={2}>
+
+                <ToggleButton
+                  id="goal-lose"
+                  type="checkbox"
+                  variant={loseSelected ? "primary" : "outline-primary"}
+                  checked={loseSelected}
+                  value="lose"
+                  onChange={(goal) => {
+                    const next = goal.currentTarget.checked;
+                    setLoseSelected(next);
+                    if (next) setGainSelected(false); // keep them mutually exclusive
+                  }}
+                >
                   Lose Weight
                 </ToggleButton>
-              </ToggleButtonGroup>
+              </div>
               <br />
             </Form>
           </CardBody>
           <CardFooter style={{ padding: 0, borderTop: "none" }}>
             <Button
               variant="primary"
-              type="submit"
+              type="button"
+              disabled={isSubmitting}
               style={{
                 display: "block",
                 width: "100%",
@@ -189,8 +334,9 @@ export default function register() {
                 fontWeight: 700,
                 fontSize: 18,
               }}
+              onClick={handleSubmit}
             >
-              Register
+              {isSubmitting ? "Registering..." : "Register"}
             </Button>
           </CardFooter>
         </Card>

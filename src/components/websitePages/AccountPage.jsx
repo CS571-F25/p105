@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useContext } from "react";
 import {
   Form,
   Button,
@@ -10,15 +10,64 @@ import {
   Alert,
   ProgressBar,
   ToggleButton,
-  ToggleButtonGroup
+  ToggleButtonGroup,
+  Modal,
+  
 } from "react-bootstrap";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate,  } from "react-router-dom";
+import DailyGoalsCard from "../websitePages/componentsPage/dailyGoalsCard.jsx";
 import svgBackground from "../../assets/backLogin.svg";
-import CardAccount from "../websitePages/componentsPage/cardAccount.jsx"
-import GoalsCardAccount from "../websitePages/componentsPage/goalsCardAccount.jsx"
-export default function MeatStore() {
-  const navigate = useNavigate();
+import CardAccount from "../websitePages/componentsPage/cardAccount.jsx";
+import GoalsCardAccount from "../websitePages/componentsPage/goalsCardAccount.jsx";
+import { AuthContext } from "../structural/CalorieCartApp.jsx";
 
+export default function store() {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
+  const weightLbs = user?.weight ?? 180; // default if not set
+  
+    const totalInches =
+      user?.heightFt != null && user?.heightIn != null
+        ? user.heightFt * 12 + user.heightIn
+        : 68; 
+    let baseCalories =
+      2500 +
+      (weightLbs - 180) * 5 + 
+      (totalInches - 68) * 5;
+      if (baseCalories < 1800) baseCalories = 1800;
+        if (baseCalories > 3200) baseCalories = 3200;
+      
+        let dailyCalories = baseCalories;
+        if (user?.gainSelected) {
+          dailyCalories += 300;
+        } else if (user?.loseSelected) {
+          dailyCalories -= 300;
+        }
+      
+        const proteinPerLb =
+          user?.gainSelected || user?.loseSelected ? 1.0 : 0.8;
+        const proteinGoal = weightLbs * proteinPerLb;
+      
+        const fatGoal = (dailyCalories * 0.3) / 9;
+      
+        const dailyGoals = {
+          caloriesConsumed: 0,                   
+          caloriesGoal: Math.round(dailyCalories),
+          proteinConsumed: 0,
+          proteinGoal: Math.round(proteinGoal),
+          fatConsumed: 0,
+          fatGoal: Math.round(fatGoal),
+        };
+      
+        const weeklyGoals = {
+          caloriesConsumed: 0,
+          caloriesGoal: dailyGoals.caloriesGoal * 7,
+          proteinConsumed: 0,
+          proteinGoal: dailyGoals.proteinGoal * 7,
+          fatConsumed: 0,
+          fatGoal: dailyGoals.fatGoal * 7,
+       };
+      
   return (
     <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
       <img
@@ -41,20 +90,37 @@ export default function MeatStore() {
           position: "relative",
           zIndex: 1,
           paddingTop: 24,
-          alignItems:"center",
-          justifyContent: "center", 
-          display:"flex",
+        
           paddingBottom: 24,
         }}
       >
+        <div
+          style={{
+            maxWidth: 1100,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
         <Row style={{ alignItems: "center", display: "flex" }}>
           <Col xs="auto">
-            <CardAccount/>
+            <CardAccount user={user} />
           </Col>
           <Col xs="auto">
-            <GoalsCardAccount/>
+          <GoalsCardAccount
+             weeklyGoals={weeklyGoals}
+              gainSelected={user?.gainSelected}
+              loseSelected={user?.loseSelected}
+            />
           </Col>
         </Row>
+       
+        <Row style={{ marginTop: 16 }}>
+            <Col xs={12}>
+              <DailyGoalsCard values={dailyGoals} />
+              
+            </Col>
+          </Row>
+          </div>
       </Container>
     </div>
   );
