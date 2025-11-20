@@ -15,15 +15,11 @@ export default function CalorieCartAppLayout({ children }) {
 
   const [qty, setQty] = useState({});
   const removeItem = (id) => {
-    setQty((prev)=> {
-      const copy = {...prev};
-      delete copy[id];
-
-      return copy
-    }
-    
-    );
-  };
+        setQty((prev) => ({
+          ...prev,
+          [id]: 0,
+        }));
+      };
   const add = (id) => {
         setQty((prev) => ({
           ...prev,
@@ -179,6 +175,7 @@ export default function CalorieCartAppLayout({ children }) {
           add,
           subtract,
           handleQtyChange,
+          removeItem
         })}
       <CheckoutComponent
         show={showCart}

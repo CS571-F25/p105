@@ -116,7 +116,7 @@ export default function CartComponent({ item, cardStyle, qty, handleQtyChange, a
               <Form.Control
                 type="text"
                 inputMode="numeric"
-                value={qty}
+                value={qty??0}
                 onChange={handleQtyChange}
                 style={qtyInputStyle}
                 placeholder="0"

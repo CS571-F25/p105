@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import {
   Form,
   Button,
@@ -18,13 +18,14 @@ import { useNavigate,  } from "react-router-dom";
 import DailyGoalsCard from "../websitePages/componentsPage/dailyGoalsCard.jsx";
 import svgBackground from "../../assets/backLogin.svg";
 import CardAccount from "../websitePages/componentsPage/cardAccount.jsx";
-import GoalsCardAccount from "../websitePages/componentsPage/goalsCardAccount.jsx";
+import GoalsCardAccount from "./componentsPage/goalsCardAccount.jsx";
 import { AuthContext } from "../structural/CalorieCartApp.jsx";
 
 export default function store() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
   const weightLbs = user?.weight ?? 180; // default if not set
+  
   
     const totalInches =
       user?.heightFt != null && user?.heightIn != null
@@ -49,7 +50,13 @@ export default function store() {
         const proteinGoal = weightLbs * proteinPerLb;
       
         const fatGoal = (dailyCalories * 0.3) / 9;
-      
+
+        const weeklyProgress = user?.weeklyProgress ?? {
+              caloriesConsumed: 0,
+              proteinConsumed: 0,
+              fatConsumed: 0,
+          }; 
+
         const dailyGoals = {
           caloriesConsumed: 0,                   
           caloriesGoal: Math.round(dailyCalories),
@@ -60,14 +67,17 @@ export default function store() {
         };
       
         const weeklyGoals = {
-          caloriesConsumed: 0,
+          caloriesConsumed: weeklyProgress.caloriesConsumed,
           caloriesGoal: dailyGoals.caloriesGoal * 7,
-          proteinConsumed: 0,
+          proteinConsumed: weeklyProgress.proteinConsumed,
           proteinGoal: dailyGoals.proteinGoal * 7,
-          fatConsumed: 0,
+          fatConsumed: weeklyProgress.fatConsumed,
           fatGoal: dailyGoals.fatGoal * 7,
        };
+
       
+      
+
   return (
     <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
       <img

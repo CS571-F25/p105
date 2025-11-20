@@ -1,7 +1,20 @@
 import { Card, Col, Row } from "react-bootstrap";
+import { useMemo } from "react";
 import CheckoutItems from "../componentsPage/checkoutItems.jsx";
-export default function CheckoutComponent() {
+export default function CheckoutComponent({items,
+  qty,
+  add,
+  subtract,
+  handleQtyChange,
+  removeItem,
+}
+) {
 
+  const cartItems = useMemo(
+    () => (items ?? []).filter((item) => (qty?.[item.id] || 0) > 0),
+    [items, qty]
+  );
+  
 return(
 
     <Card 
@@ -31,17 +44,23 @@ return(
       <div> Cart</div>
          </Card.Header>
         <Card.Body>
-          <CheckoutItems />
-          <hr style={{ margin: "8px 0", opacity: 0.3 }} />
-
-          <CheckoutItems />
-          <hr style={{ margin: "8px 0", opacity: 0.3 }} />
-
-          <CheckoutItems />
-          <hr style={{ margin: "8px 0", opacity: 0.3 }} />
-
-          <CheckoutItems />
-
+        {cartItems.length === 0 ? (
+          <div>Your cart is empty.</div>
+        ) : (
+          cartItems.map((item) => (
+            <div key={item.id} style={{ marginBottom: 12 }}>
+              <CheckoutItems
+                item={item}
+                qty={qty?.[item.id] || 0}
+                add={() => add(item.id)}
+                subtract={() => subtract(item.id)}
+                handleQtyChange={(e) => handleQtyChange(item.id, e)}
+                removeItem={() => removeItem(item.id)}
+              />
+              <hr style={{ margin: "8px 0", opacity: 0.3 }} />
+            </div>
+          ))
+        )}
         </Card.Body>
     </Card>
 

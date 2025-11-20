@@ -59,7 +59,6 @@ export default function register() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // bucket returns: { collection: "account", results: { "<id>": { ... } } }
         const existingAccounts = Object.values(data.results || {});
         const alreadyExists = existingAccounts.some(
           (acc) => acc.userName === userName
@@ -68,11 +67,10 @@ export default function register() {
         if (alreadyExists) {
           setErrorText("An account with that username already exists.");
           setSubmission(false);
-          return;
+          return Promise.reject("USERNAME_EXISTS"); 
         }
 
-        // 2) POST new account to the bucket
-        fetch("https://cs571api.cs.wisc.edu/rest/f25/bucket/account", {
+        return fetch("https://cs571api.cs.wisc.edu/rest/f25/bucket/account", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -87,38 +85,56 @@ export default function register() {
             heightIn: inch,
             gainSelected,
             loseSelected,
+            weeklyProgress: {                
+              caloriesConsumed: 0,            
+              proteinConsumed: 0,             
+              fatConsumed: 0,                 
+            },
           }),
-        })
-          .then((res) => res.json())
-          .then((created) => {
-            const newUser = {
-              userName,
-              password,
-              weight,
-              heightFt: ft,
-              heightIn: inch,
-              gainSelected,
-              loseSelected,
-            };
+        });
+      })
+      .then((res) => {
+        if (!res) return null;              
+        return res.json();
+      })
+      .then((created) => {
+        if (!created) return;             
 
-            setUser(newUser)
-            console.log("Created account:", created);
-            alert("Account created! You can now log in.");
-            setSubmission(false);
-            navigate("/");
-                    });
+        const accountId = created.id; 
+
+        const newUser = {
+          userName,
+          password,
+          weight,
+          heightFt: ft,
+          heightIn: inch,
+          gainSelected,
+          loseSelected,
+          accountId,                        
+          weeklyProgress: {                 
+            caloriesConsumed: 0,
+            proteinConsumed: 0,
+            fatConsumed: 0,
+          },
+        };
+
+        setUser(newUser);
+       console.log(created)
+       console.log(accountId);
+        alert("Account created! You can now log in.");
+        setSubmission(false);
+        navigate("/");
       });
-  };
+     
+  };                                     
 
-  //check register conditions
+  
+
+
 
   const ft = Math.floor(height / 12);
   const inch = height % 12;
 
-  const HandleWeight = useCallback(() => {}, []);
-
-  const HandleHeight = useCallback(() => {}, []);
-  const HandleGoals = useCallback(() => {}, []);
 
   return (
     <div

@@ -1,21 +1,61 @@
-import { Card, Container , Col, Row} from "react-bootstrap";
+import { Card, Container , Col, Row,Modal} from "react-bootstrap";
 import CheckoutButtonCard from "../websitePages/componentsPage/checkoutButtonCard.jsx";
 import CheckoutComponent from "../websitePages/componentsPage/checkoutComponent.jsx";
-export default function checkout() {
-    
+import { useMemo, useState } from "react";
+import { AuthContext } from "../structural/CalorieCartApp.jsx";
+export default function checkout(
+  {
+    items,
+    qty,
+    add,
+    subtract,
+    handleQtyChange,
+    removeItem,
+  }
+) {
+
+
+
     return (
         <div >
          <Container>
             <Row>
               <Col xs={12} md={8}>
-            <CheckoutComponent/>
+            <CheckoutComponent
+             items={items}
+             qty={qty}
+             add={add}
+             subtract={subtract}
+             handleQtyChange={handleQtyChange}
+             removeItem={removeItem}
+            />
                 </Col>
 
             
               <Col xs={12} md={4}>
-                <CheckoutButtonCard/>
+                <CheckoutButtonCard
+                items={items}
+                qty={qty
+
+                }
+                />
                 </Col>
             </Row>
+            <Modal>
+              {
+                    <div>
+                      <h2>
+                      You are still have # daily calories
+                      </h2>
+                      <h2>
+                      You are still have # weekly calories
+                      look at your account  for more specific on protein, and fat weekly and daily
+                      </h2>
+                    </div>
+
+               
+              }
+      </Modal>
          </Container> 
         </div>
       );
