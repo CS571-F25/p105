@@ -1,7 +1,7 @@
 import { Card, Button } from "react-bootstrap";
 import muscleIcon from "../../../assets/muscleIcon.svg";
 
-export default function CardAccount({ user }) {
+export default function CardAccount({ user,onEdit }) {
   return (
     <Card
       style={{
@@ -33,6 +33,8 @@ export default function CardAccount({ user }) {
           size="sm"
           variant="light"
           style={{ color: "#2b7a4b", borderRadius: 10 }}
+          onClick={onEdit}
+
         >
           Edit
         </Button>

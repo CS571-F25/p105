@@ -34,7 +34,9 @@ export default function CalorieCartAppLayout({ children }) {
           });
         };
 
-
+        const clearCart = () => {
+          setQty({});
+        };
 
       const handleQtyChange = (id, e) => {
             const raw = e.target.value.replace(/[^0-9]/g, "");
@@ -175,7 +177,8 @@ export default function CalorieCartAppLayout({ children }) {
           add,
           subtract,
           handleQtyChange,
-          removeItem
+          removeItem,
+          clearCart
         })}
       <CheckoutComponent
         show={showCart}
@@ -186,6 +189,7 @@ export default function CalorieCartAppLayout({ children }) {
         subtract={subtract}
         handleQtyChange={handleQtyChange}
         removeItem={removeItem}
+        clearCart={clearCart}
       />
     </div>
   );

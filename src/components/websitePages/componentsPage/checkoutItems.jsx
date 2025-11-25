@@ -59,7 +59,7 @@ export default function CheckoutItems({
           <img
           src={item.image}
             alt="Item"
-            style={{ width: "100%", marginRight:10 }}
+            style={{ maxWidth: "100%", maxHeight: "120px", marginRight:10 ,objectFit: "contain",display: "block"}}
           />
         </Col>
         <Col md={4}>

@@ -14,18 +14,22 @@ import {
   Modal,
   
 } from "react-bootstrap";
-import { useNavigate,  } from "react-router-dom";
+import EditGoal from "../websitePages/componentsPage/editGoals.jsx";
 import DailyGoalsCard from "../websitePages/componentsPage/dailyGoalsCard.jsx";
 import svgBackground from "../../assets/backLogin.svg";
 import CardAccount from "../websitePages/componentsPage/cardAccount.jsx";
 import GoalsCardAccount from "./componentsPage/goalsCardAccount.jsx";
 import { AuthContext } from "../structural/CalorieCartApp.jsx";
+import EditAccount from "../websitePages/componentsPage/editAccount.jsx"; 
+
 
 export default function store() {
-  const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
   const weightLbs = user?.weight ?? 180; // default if not set
   
+  const [showEditGoals, setShowEditGoals] = useState(false);
+  const [showEditAccount, setShowEditAccount] = useState(false);
+
   
     const totalInches =
       user?.heightFt != null && user?.heightIn != null
@@ -42,7 +46,7 @@ export default function store() {
         if (user?.gainSelected) {
           dailyCalories += 300;
         } else if (user?.loseSelected) {
-          dailyCalories -= 300;
+          dailyCalories -= 400;
         }
       
         const proteinPerLb =
@@ -57,26 +61,41 @@ export default function store() {
               fatConsumed: 0,
           }; 
 
-        const dailyGoals = {
-          caloriesConsumed: 0,                   
-          caloriesGoal: Math.round(dailyCalories),
-          proteinConsumed: 0,
-          proteinGoal: Math.round(proteinGoal),
-          fatConsumed: 0,
-          fatGoal: Math.round(fatGoal),
-        };
-      
+          const defaultDailyCalories = Math.round(dailyCalories);
+          const defaultDailyProtein = Math.round(proteinGoal);
+          const defaultDailyFat = Math.round(fatGoal);
+        
+          const weeklyCaloriesGoal =
+            user?.weeklyCaloriesGoal ?? defaultDailyCalories * 7;
+          const weeklyProteinGoal =
+            user?.weeklyProteinGoal ?? defaultDailyProtein * 7;
+          const weeklyFatGoal =
+            user?.weeklyFatGoal ?? defaultDailyFat * 7;
+
+
+
+
+
+          const dailyGoals = {
+            caloriesConsumed: weeklyProgress.caloriesConsumed/7,                   
+            caloriesGoal: Math.round(weeklyCaloriesGoal/7),
+            proteinConsumed: weeklyProgress.proteinConsumed/7,
+            proteinGoal: Math.round(weeklyProteinGoal/7),
+            fatConsumed: weeklyProgress.fatConsumed/7,
+            fatGoal: Math.round(weeklyFatGoal/7),
+          };
+        
+     
         const weeklyGoals = {
           caloriesConsumed: weeklyProgress.caloriesConsumed,
-          caloriesGoal: dailyGoals.caloriesGoal * 7,
+          caloriesGoal: weeklyCaloriesGoal,
           proteinConsumed: weeklyProgress.proteinConsumed,
-          proteinGoal: dailyGoals.proteinGoal * 7,
+          proteinGoal: weeklyProteinGoal,
           fatConsumed: weeklyProgress.fatConsumed,
-          fatGoal: dailyGoals.fatGoal * 7,
+          fatGoal:weeklyFatGoal,
        };
 
-      
-      
+
 
   return (
     <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
@@ -113,13 +132,16 @@ export default function store() {
         >
         <Row style={{ alignItems: "center", display: "flex" }}>
           <Col xs="auto">
-            <CardAccount user={user} />
+            <CardAccount user={user} 
+
+          onEdit={() => setShowEditAccount(true)}  />
           </Col>
           <Col xs="auto">
           <GoalsCardAccount
              weeklyGoals={weeklyGoals}
-              gainSelected={user?.gainSelected}
-              loseSelected={user?.loseSelected}
+             gainSelected={user?.gainSelected}
+            loseSelected={user?.loseSelected}
+             onEditGoals={() => setShowEditGoals(true)}
             />
           </Col>
         </Row>
@@ -132,6 +154,19 @@ export default function store() {
           </Row>
           </div>
       </Container>
+      <EditAccount
+        show={showEditAccount}
+        onHide={() => setShowEditAccount(false)}
+      />
+      <EditGoal 
+    show={showEditGoals}
+    onHide={() => setShowEditGoals(false)}
+    weeklyGoals={weeklyGoals}
+  gainSelected={user?.gainSelected}
+  loseSelected={user?.loseSelected}
+      />
+
+  
     </div>
   );
 }

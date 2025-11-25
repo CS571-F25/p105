@@ -5,16 +5,14 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
-import { useState } from "react";
-export default function goalsCardAccount({ weeklyGoals}) {
+import { useState, useEffect } from "react";
+export default function goalsCardAccount({ weeklyGoals, loseSelected, gainSelected, onEditGoals}) {
   const caloriesConsumed = weeklyGoals.caloriesConsumed ?? 0;
   const caloriesGoal = weeklyGoals.caloriesGoal ?? 2500 * 7;
   const proteinConsumed = weeklyGoals.proteinConsumed ?? 0;
   const proteinGoal = weeklyGoals.proteinGoal ?? 140 * 7;
   const fatConsumed = weeklyGoals.fatConsumed ?? 0;
   const fatGoal = weeklyGoals.fatGoal ?? 80 * 7;
-  const [gainSelected, setGainSelected] = useState(true);
-  const [loseSelected, setLoseSelected] = useState(false);
 
   const caloriesPct = caloriesGoal
     ? Math.min(100, (caloriesConsumed / caloriesGoal) * 100)
@@ -56,6 +54,7 @@ export default function goalsCardAccount({ weeklyGoals}) {
           size="sm"
           variant="light"
           style={{ color: "#2b7a4b", borderRadius: 10 }}
+          onClick={onEditGoals}
         >
           Edit
         </Button>
@@ -154,12 +153,8 @@ export default function goalsCardAccount({ weeklyGoals}) {
             type="checkbox"
             variant={gainSelected ? "primary" : "outline-primary"}
             checked={gainSelected}
+            disabled
             value="gain"
-            onChange={(goal) => {
-              const next = goal.currentTarget.checked;
-              setGainSelected(next);
-              if (next) setLoseSelected(false); // keep them mutually exclusive
-            }}
             style={{ marginRight: 8 }}
           >
             Gain Weight
@@ -170,12 +165,8 @@ export default function goalsCardAccount({ weeklyGoals}) {
             type="checkbox"
             variant={loseSelected ? "primary" : "outline-primary"}
             checked={loseSelected}
+            disabled
             value="lose"
-            onChange={(goal) => {
-              const next = goal.currentTarget.checked;
-              setLoseSelected(next);
-              if (next) setGainSelected(false); // keep them mutually exclusive
-            }}
           >
             Lose Weight
           </ToggleButton>

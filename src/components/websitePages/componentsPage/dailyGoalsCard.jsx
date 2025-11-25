@@ -1,10 +1,11 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
 import CartImage from "../../../assets/cart.svg";
 import CircularStat from "./circularStats";
+import { useNavigate } from "react-router";
 export default function dailyGoalsCard({ title, values }) {
   const caloriesConsumed = values?.caloriesConsumed ?? 0;
   const caloriesGoal = values?.caloriesGoal ?? 2500;
-
+    const navigate = useNavigate();
   const proteinConsumed = values?.proteinConsumed ?? 0;
   const proteinGoal = values?.proteinGoal ?? 140;
 
@@ -95,7 +96,9 @@ export default function dailyGoalsCard({ title, values }) {
                   justifyContent: "center",
                   boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
                   cursor: "pointer",
+                  
                 }}
+                onClick={()=>navigate("/store/protein")}
               >
                 <img
                   src={CartImage}

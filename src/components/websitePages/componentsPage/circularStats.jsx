@@ -54,7 +54,7 @@ export default function  CircularStat({label, value, max, color }) {
             fontSize: 12,
           }}
         >
-          <strong>{value}</strong>
+          <strong>{value.toFixed(2)}</strong>
           <span style={{ fontSize: 11 }}>/ {max}</span>
         </div>
       </div>
