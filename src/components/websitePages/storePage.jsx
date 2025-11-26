@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useContext, useState } from "react";
 import { Container, Col, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import StoreCard from "../websitePages/componentsPage/cartComponent";
+import StoreCard from "./componentsPage/cartComponent";
 import { AuthContext } from "../structural/CalorieCartApp";
 export default function StorePage({
   items,
@@ -97,19 +97,19 @@ export default function StorePage({
   return (
     <div style={{ margin: "0 auto", padding: 16 }}>
       <Container fluid>
-        <h1 style={{ marginTop: 20, mzarginBottom: 20 }}>{title}</h1>
+        <h1 style={{ marginTop: 20, marginBottom: 20 }}>{title}</h1>
         <Row style={{ marginTop: 20 }}>
           <Col
             md={3}
             style={{
-              border: `8px solid ${green}`,
               borderRadius: 6,
               padding: 16,
-              minHeight: 360,
+              minHeight: "20%",
+              alignItems: "center",  
             }}
           >
             <h2 style={{ marginBottom: 12 }}>Filters</h2>
-            <Form>
+            <Form style={{alignSelf:"center",  maxWidth: 220}}>
               <Form.Check type="checkbox" label="cheap"  onChange={(e) =>
                   setFilters((f) => ({ ...f, cheap: e.target.checked }))
                 }/>
@@ -128,7 +128,6 @@ export default function StorePage({
           <Col md={9}>
             <div
               style={{
-                border: `8px solid ${green}`,
                 borderRadius: 6,
                 padding: 10,
                 marginBottom: 24,
@@ -141,27 +140,32 @@ export default function StorePage({
 
             <div
               style={{
-                border: `8px solid ${green}`,
                 borderRadius: 6,
                 padding: 16,
                 minHeight: 420,
               }}
             >
-              <Row xs={1} sm={2} md={3}>
+              <Row lg={4} sm={12} md={6}>
               {filteredItems.map((item) => {
                   const id = item.id;
                   const thisQty = qty?.[id] ?? 0;
 
                   return (
+                    <Col
+                    key={id}
+                    xs={12}    
+                    sm={8}     
+                    md={6}     
+                    lg={4}>
                     <StoreCard
-                      key={id}
                       item={item}
-                      cardStyle={{ width: "32%" }}
+                      cardStyle={{ width: "100%" }}
                       qty={thisQty}
                       add={() => add(id)}
                       subtract={() => subtract(id)}
                       handleQtyChange={(e) => handleQtyChange(id, e)}
                     />
+                    </Col>
                   );
                 })}
               </Row>

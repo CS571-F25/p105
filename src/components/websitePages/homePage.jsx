@@ -3,7 +3,7 @@ import { Container, Carousel, Image, Col, Row } from "react-bootstrap";
 import imageCaltrack from "../../images/trackCals.png";
 import exercise from "../../images/exercise.png";
 import healthyDiet from "../../images/healthyDiet.png";
-import CartComponent from "../websitePages/componentsPage/cartComponent.jsx";
+import CartComponent from "./componentsPage/cartComponent.jsx";
 
 const heroStyle = {
   width: "100%",

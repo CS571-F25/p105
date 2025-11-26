@@ -6,7 +6,6 @@ export default function CardAccount({ user,onEdit }) {
     <Card
       style={{
         margin: 25,
-        width: 300,
         height: 400,
         borderRadius: 21,
         boxShadow: "0 6px 16px rgba(0,0,0,0.1)",

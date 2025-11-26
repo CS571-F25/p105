@@ -83,88 +83,108 @@ export default function CalorieCartAppLayout({ children }) {
 
   return (
     <div>
-      <Navbar style={{ backgroundColor: "#59b371" }} data-bs-theme="dark">
-        <Container
-          fluid
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Navbar.Brand
-              as={Link}
-              to="/"
-              style={{ display: "flex", alignItems: "center", marginRight: 16 }}
-            >
-              <img
-                src={crest}
-                alt="UW Crest"
-                width="40"
-                height="40"
-                style={{ marginRight: 8 }}
-              />
-              Badger Website
-            </Navbar.Brand>
+       <Navbar
+        style={{ backgroundColor: "#59b371" }}
+        data-bs-theme="dark"
+        expand="md"
+      >
+        <Container fluid>
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            style={{ display: "flex", alignItems: "center", marginRight: 16 }}
+          >
+            <img
+              src={crest}
+              alt="UW Crest"
+              width="40"
+              height="40"
+              style={{ marginRight: 8 }}
+            />
+            Badger Website
+          </Navbar.Brand>
 
-            <Nav>
-              <NavDropdown
-                title="Store"
-                menuVariant="dark"
-                style={{ marginRight: 12 }}
-              >
-                {types.map((t) => (
-                  <NavDropdown.Item key={t} onClick={() => goToStore(t)}>
-                    {t}
-                  </NavDropdown.Item>
-                ))}
-              </NavDropdown>
-            </Nav>
-          </div>
+          <Navbar.Toggle aria-controls="main-navbar" />
 
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            {user ? (
-              <Nav.Link onClick={handleLogout} style={{ color: "#fff" }}>
-                Logout
-              </Nav.Link>
-            ) : (
-              <Nav.Link as={Link} to="/login" style={{ color: "#fff" }}>
-                Login
-              </Nav.Link>
-            )}
-            <Button
-              variant="light"
-              onClick={() => setShowCart(true)}
-              style={{ padding: 4, background: "transparent", border: 0 }}
-              aria-label="Cart"
-            >
-              <img src={cart} width="28" height="28" alt="Cart" />
-            </Button>
-
-            <Button
-              variant="light"
-              onClick={() => {
-                if (!user) navigate("/login");
-                else navigate("/account");
-              }}
+          <Navbar.Collapse id="main-navbar">
+            <div
               style={{
-                width: 36,
-                height: 36,
-                padding: 0,
-                background: "transparent",
-                border: 0,
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: 4,
+                marginBottom: 4,
+                flexWrap: "wrap",
               }}
-              aria-label="Account"
-              title="Account"
             >
-              <img src={accountIcon} width="28" height="28" alt="Account" />
-            </Button>
-          </div>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Nav>
+                  <NavDropdown
+                    title="Store"
+                    menuVariant="dark"
+                    style={{ marginRight: 12 }}
+                  >
+                    {types.map((t) => (
+                      <NavDropdown.Item key={t} onClick={() => goToStore(t)}>
+                        {t}
+                      </NavDropdown.Item>
+                    ))}
+                  </NavDropdown>
+                </Nav>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginTop: 4,
+                }}
+              >
+                {user ? (
+                  <Nav.Link onClick={handleLogout} style={{ color: "#fff" }}>
+                    Logout
+                  </Nav.Link>
+                ) : (
+                  <Nav.Link as={Link} to="/login" style={{ color: "#fff" }}>
+                    Login
+                  </Nav.Link>
+                )}
+
+                <Button
+                  variant="light"
+                  onClick={() => setShowCart(true)}
+                  style={{ padding: 4, background: "transparent", border: 0 }}
+                  aria-label="Cart"
+                >
+                  <img src={cart} width="28" height="28" alt="Cart" />
+                </Button>
+
+                <Button
+                  variant="light"
+                  onClick={() => {
+                    if (!user) navigate("/login");
+                    else navigate("/account");
+                  }}
+                  style={{
+                    width: 36,
+                    height: 36,
+                    padding: 0,
+                    background: "transparent",
+                    border: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  aria-label="Account"
+                  title="Account"
+                >
+                  <img src={accountIcon} width="28" height="28" alt="Account" />
+                </Button>
+              </div>
+            </div>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       {children &&

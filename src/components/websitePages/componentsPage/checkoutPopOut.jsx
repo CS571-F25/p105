@@ -1,7 +1,7 @@
 import { Offcanvas, Container, Button, Col, Row } from "react-bootstrap";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import CheckoutItem from "./checkoutButtonCard"
-import CheckoutPopItem from "../componentsPage/checkoutPopItems";
+import CheckoutPopItem from "./checkoutPopItems";
 import { AuthContext } from "../../structural/CalorieCartApp";
 import { useContext, useMemo } from "react";
 export default function CheckoutComponent({items, show, handleClose, qty, add,subtract, handleQtyChange, removeItem}) {

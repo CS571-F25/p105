@@ -1,6 +1,6 @@
 import { Card, Col, Row } from "react-bootstrap";
 import { useMemo } from "react";
-import CheckoutItems from "../componentsPage/checkoutItems.jsx";
+import CheckoutItems from "./checkoutItems.jsx";
 export default function CheckoutComponent({items,
   qty,
   add,

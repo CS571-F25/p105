@@ -51,29 +51,31 @@ export default function CartComponent({
       };
 
   const qtyInputStyle = {
-    width: 40,
+    width: "clamp(2.2rem, 6vw, 2.8rem)",
     padding: 0,
     textAlign: "center",
-    height: "1.8rem",
+    height: "clamp(1.6rem, 4vw, 2rem)",
     fontWeight: 600,
-    fontSize: 14,
+    fontSize: "clamp(0.8rem, 2vw, 1rem)",
   };
 
   const qtyWrapperStyle = {
     display: "flex",
     alignItems: "center",
     gap: 8,
+    marginBottom: 10,
     borderRadius: 999,
     border: "1px solid #ddd",
     padding: "4px 10px",
   };
 
   const qtyButtonStyle = {
-    padding: "2px 8px",
+   padding: "0.1rem 0.4rem",
     borderRadius: 999,
     border: "none",
     backgroundColor: "transparent",
-    fontSize: 18,
+    fontSize: "clamp(1rem, 2.6vw, 1.4rem)",
+    lineHeight: 1,
   };
 
   const priceStyle = {
@@ -92,7 +94,10 @@ export default function CartComponent({
   const buttonDesign = {
     borderRadius: 999,
     fontWeight: 600,
-    marginRight: 20,
+    marginBottom: 10,
+    marginRight: 10,
+    padding: "0.35rem 1.1rem",
+    fontSize: "clamp(0.85rem, 2vw, 1rem)",
   };
 
   const tableStyle = {
@@ -119,7 +124,14 @@ export default function CartComponent({
   };
 
   return (
-    <Card style={{ margin: 3, alignItems: "center", ...cardStyle }}>
+    <Card style={{ 
+      margin: 3,
+      alignItems: "center",
+      width: "100%",        // fill the <Col>
+      display: "flex",
+      flexDirection: "column",
+      ...cardStyle,
+       }}>
       <Card.Img
         variant="top"
         src={item?.image}
@@ -158,6 +170,7 @@ export default function CartComponent({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexWrap: "wrap",   
             marginTop: 20,
           }}
         >

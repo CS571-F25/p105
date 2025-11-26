@@ -14,13 +14,13 @@ import {
   Modal,
   
 } from "react-bootstrap";
-import EditGoal from "../websitePages/componentsPage/editGoals.jsx";
-import DailyGoalsCard from "../websitePages/componentsPage/dailyGoalsCard.jsx";
+import EditGoal from "./componentsPage/editGoals.jsx";
+import DailyGoalsCard from "./componentsPage/dailyGoalsCard.jsx";
 import svgBackground from "../../assets/backLogin.svg";
-import CardAccount from "../websitePages/componentsPage/cardAccount.jsx";
+import CardAccount from "./componentsPage/cardAccount.jsx";
 import GoalsCardAccount from "./componentsPage/goalsCardAccount.jsx";
 import { AuthContext } from "../structural/CalorieCartApp.jsx";
-import EditAccount from "../websitePages/componentsPage/editAccount.jsx"; 
+import EditAccount from "./componentsPage/editAccount.jsx"; 
 
 
 export default function store() {
@@ -98,7 +98,7 @@ export default function store() {
 
 
   return (
-    <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
+    <div style={{ position: "relative", height: "100%" }}>
       <img
         src={svgBackground}
         alt="background texture"
@@ -131,13 +131,13 @@ export default function store() {
           }}
         >
         <Row style={{ alignItems: "center", display: "flex" }}>
-          <Col xs="auto">
+          <Col xs={12} md={4} style={{ marginBottom: 16 }}>
             <CardAccount user={user} 
 
           onEdit={() => setShowEditAccount(true)}  />
           </Col>
-          <Col xs="auto">
-          <GoalsCardAccount
+          <Col xs={12} md={8} style={{ marginBottom: 16 }}>
+          <GoalsCardAccount 
              weeklyGoals={weeklyGoals}
              gainSelected={user?.gainSelected}
             loseSelected={user?.loseSelected}
@@ -146,8 +146,8 @@ export default function store() {
           </Col>
         </Row>
        
-        <Row style={{ marginTop: 16 }}>
-            <Col xs={12}>
+        <Row >
+            <Col xs={12} style={{ marginBottom: 16 }}>
               <DailyGoalsCard values={dailyGoals} />
               
             </Col>

@@ -27,8 +27,8 @@ export default function goalsCardAccount({ weeklyGoals, loseSelected, gainSelect
   return (
     <Card
       style={{
-        width: 700,
-        height: 400,
+        width: "8vrem",
+        height: "2vrem",
         borderRadius: 20,
         display: "flex",
       }}

@@ -1,6 +1,6 @@
 import { Card, Container, Col, Row, Modal } from "react-bootstrap";
-import CheckoutButtonCard from "../websitePages/componentsPage/checkoutButtonCard.jsx";
-import CheckoutComponent from "../websitePages/componentsPage/checkoutComponent.jsx";
+import CheckoutButtonCard from "./componentsPage/checkoutButtonCard.jsx";
+import CheckoutComponent from "./componentsPage/checkoutComponent.jsx";
 import { useMemo, useState } from "react";
 import { AuthContext } from "../structural/CalorieCartApp.jsx";
 export default function checkout({
